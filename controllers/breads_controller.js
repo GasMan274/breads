@@ -2,6 +2,33 @@ const express = require('express')
 const breads = express.Router()
 const Bread = require('../models/bread.js')
 
+// INDEX
+breads.get('/', (req, res) => {
+  res.render('Index',
+    {
+      breads: Bread,
+      title: 'Index Page'
+    }
+  )
+})
+
+// CREATE
+breads.post('/', (req, res) => {
+  console.log(req.body)
+  if(req.body.hasGluten === 'on') {
+    req.body.hasGluten = 'true'
+  } else {
+    req.body.hasGluten = 'false'
+  }
+  Bread.push(req.body)
+  res.redirect('/breads')
+})
+
+// NEW
+breads.get('/new', (req, res) => {
+  res.render('new')
+})
+
 // SHOW
 breads.get('/:arrayIndex', (req, res) => {
   if (Bread[req.params.arrayIndex]) {
@@ -27,6 +54,7 @@ breads.get('/:id', (req, res) => {
     })
 })
 
+//DELETE
 breads.delete('/:id', (req, res) => {
   Bread.findByIdAndDelete(req.params.id) 
     .then(deletedBread => { 
@@ -51,4 +79,5 @@ breads.put('/:id', (req, res) => {
 
 module.exports = breads
     
+
 
