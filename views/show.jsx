@@ -6,9 +6,12 @@ function Show ({bread}) {
   // console.log(bread.name)
     return (
       <Default>
-  <h3>{bread.name}</h3>
-  <p>
-    and it
+        <h3>{bread.name}</h3>
+        <form action={`/breads/${index}?_method=DELETE`} method="POST">
+          <input type='submit' value="DELETE"/>
+      </form>
+
+      <p>
     {
       bread.hasGluten
       ? <span> does </span>
